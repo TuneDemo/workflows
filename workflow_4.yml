@@ -1,0 +1,19 @@
+# Multiple Jobs example
+name: workflow_4
+on:
+  push:
+    branches: [ main ]
+jobs:
+  setup_job:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Check Out
+      uses: actions/checkout@v4
+      with:
+        repository: TuneDemo/rs_policy_service_actions
+        token: ${{ secrets.GITHUB_TOKEN }}
+  display_name_job:
+    runs-on: ubuntu-latest
+    steps:
+    - run: echo 'Welcome to GitHub Actions........'
+

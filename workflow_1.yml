@@ -1,0 +1,16 @@
+name: workflow_1
+run-name: ${{github.actor}} is creating the first workflow
+on: [push]
+jobs:
+  check-bats-version:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+           repository: TuneDemo/rs_policy_service_actions
+           token: ${{ secrets.GITHUB_TOKEN }}      
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20.9.0'
+      - run: npm install -g bats
+      - run: bats -v

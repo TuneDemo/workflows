@@ -1,0 +1,32 @@
+# Correct the mistake by introducing checkin step in the job 2
+
+name: workflow_5
+on: [push]
+jobs:
+  setup_job:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Check Out
+      uses: actions/checkout@v4
+      with:
+        repository: TuneDemo/rs_policy_service_actions
+        token: ${{ secrets.GITHUB_TOKEN }}
+        
+  display_name_job:
+    needs: setup_job
+    runs-on: ubuntu-latest
+    steps:
+    - name: Check Out
+      uses: actions/checkout@v4
+      with:
+        repository: TuneDemo/rs_policy_service_actions
+        token: ${{ secrets.GITHUB_TOKEN }}
+        
+    - name: Set up JDK 17
+      uses: actions/setup-java@v4
+      with:
+        java-version: '17'
+        distribution: 'temurin'
+        cache: maven
+    - name: Build with Maven
+      run : mvn -B package --file pom.xml

@@ -1,0 +1,30 @@
+# Build the Software with Multiple Java Platform Versions
+
+name: workflow_7
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+jobs:
+  buil_push_docker_image:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        java: [17, 21 ]
+    steps:
+      - name: Check Out
+        uses: actions/checkout@v4
+        with:
+          repository: TuneDemo/rs_policy_service_actions
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set up JDK Versions
+        uses: actions/setup-java@v4
+        with:
+          java-version: ${{matrix.java}}
+          distribution: 'temurin'
+
+      - name: Display Java Version
+        run : java --version
+
